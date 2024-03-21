@@ -35,3 +35,9 @@ cc_fuzz {
     srcs: ["libgptf_fuzzer.cc"],
     defaults: ["libgptf_fuzz_defaults"],
 }
+
+cc_fuzz {
+    name: "basicmbr_fuzzer",
+    srcs: ["basicmbr_fuzzer.cc"],
+    defaults: ["libgptf_fuzz_defaults"],
+}
