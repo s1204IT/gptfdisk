@@ -1,0 +1,5 @@
+*.o
+/gdisk
+/cgdisk
+/sgdisk
+/fixparts

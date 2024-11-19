@@ -1,0 +1,47 @@
+name: Build
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: sudo apt-get install -y uuid-dev libpopt-dev
+
+      - name: Build
+        run: make
+
+      - name: Test
+        continue-on-error: true
+        run: make test
+
+      - name: Attest
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-path: |
+            gdisk
+            cgdisk
+            sgdisk
+            fixparts
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: gptfdisk
+          path: |
+            gdisk
+            cgdisk
+            sgdisk
+            fixparts
